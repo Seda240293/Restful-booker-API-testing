@@ -1,0 +1,550 @@
+{
+	"info": {
+		"_postman_id": "9e9cf523-b101-4bec-9f78-e76742eb2cd8",
+		"name": "Restful-booker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23050188"
+	},
+	"item": [
+		{
+			"name": "GetBookingids",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var one = 5;\r",
+							"var two = 10;\r",
+							"console.log(one + two);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time to be below 700 ms\", function () {\r",
+							"   pm.expect(pm.response.responseTime).to.be.below(700)\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time to be below 700 ms\", function () {\r",
+							"   pm.expect(pm.response.responseTime).to.be.below(700);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is array\", function () {\r",
+							"   pm.expect(pm.response.json()).to.be.an(\"array\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_aurl}}/booking",
+					"host": [
+						"{{base_aurl}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const data = pm.response.json();\r",
+							"\r",
+							"const token = data.token;\r",
+							"\r",
+							"console.log(token);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.expect(pm.response.code).to.eql(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_aurl}}/auth/",
+					"host": [
+						"{{base_aurl}}"
+					],
+					"path": [
+						"auth",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const data = pm.response.json();\r",
+							"\r",
+							"console.log(pm.response.json);\r",
+							"\r",
+							"pm.collectionVariables.set(\"bookingID\", data.bookingid);\r",
+							"pm.environment.set(\"bookingID\", data.bookingid)\r",
+							"\r",
+							"\r",
+							"\r",
+							"// pm.test(\"Status code is 200\", function () {\r",
+							"//     pm.response.to.have.status(200);\r",
+							"// });\r",
+							"\r",
+							"// // pm.test(\"Check bookingid\", function () {\r",
+							"// //     pm.expect(data.bookingid).to.eql(675);\r",
+							"// // });\r",
+							"\r",
+							"// pm.test(\"Check firstname\", function () {\r",
+							"//     pm.expect(data.booking.firstname).to.eql(\"Jim\");\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Check lastname\", function () {\r",
+							"//     pm.expect(data.booking.lastname).to.eql(\"Brown\");\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Check totalprice\", function () {\r",
+							"//     pm.expect(data.booking.totalprice).to.eql(111);\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Check depositpaid\", function () {\r",
+							"//     pm.expect(data.booking.depositpaid).to.eql(true);\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Check checkin date\", function () {\r",
+							"//     pm.expect(data.booking.bookingdates.checkin).to.eql(\"2018-01-01\");\r",
+							"// });   \r",
+							"pm.collectionVariables.set(\"bookingid\", data.bookingid); // Store bookingid in collection variable for future use.\r",
+							"\r",
+							"// pm.test(\"Check checkout date\", function () {\r",
+							"//     pm.expect(data.booking.bookingdates.checkout).to.eql(\"2019-01-01\");\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Check additionalneeds\", function () {\r",
+							"//     pm.expect(data.booking.additionalneeds).to.eql(\"Breakfast\");\r",
+							"// });\r",
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Booking ID</th>\r",
+							"        <th>First Name</th>\r",
+							"        <th>Last Name</th>\r",
+							"        <th>Total Price</th>\r",
+							"        <th>Deposit Paid</th>\r",
+							"        <th>Check-in</th>\r",
+							"        <th>Check-out</th>\r",
+							"        <th>Additional Needs</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.bookingid}}</td>\r",
+							"        <td>{{response.booking.firstname}}</td>\r",
+							"        <td>{{response.booking.lastname}}</td>\r",
+							"        <td>{{response.booking.totalprice}}</td>\r",
+							"        <td>{{response.booking.depositpaid}}</td>\r",
+							"        <td>{{response.booking.bookingdates.checkin}}</td>\r",
+							"        <td>{{response.booking.bookingdates.checkout}}</td>\r",
+							"        <td>{{response.booking.additionalneeds}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"firstname\" : \"seda\",\r\n    \"lastname\" : \"aydinli\",\r\n    \"totalprice\" : 111,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2025-04-10\",\r\n        \"checkout\" : \"2025-04-20\"\r\n    },\r\n    \"additionalneeds\" : \"Lunch\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_aurl}}/booking",
+					"host": [
+						"{{base_aurl}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstname\": \"Seda\",\r\n  \"lastname\": \"Aydinli\",\r\n  \"totalprice\": 300,\r\n  \"depositpaid\": true,\r\n  \"bookingdates\": {\r\n    \"checkin\": \"2025-04-12\",\r\n    \"checkout\": \"2025-04-20\"\r\n  },\r\n  \"additionalneeds\": \"dinner\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_aurl}}/booking/2060",
+					"host": [
+						"{{base_aurl}}"
+					],
+					"path": [
+						"booking",
+						"2060"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is to be below 500 ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "aee5e7cdbfe5449",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/25",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBooking",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_aurl}}/booking/5?\"firstname\"=seda&\"lastname\"=aydinli&\"checkin\"=05-04-2024&checkout=24-12-2025&firstname=Alina&lastname=Umaxanova&checkin=05-02-2025&checkout=05-04-2029",
+					"host": [
+						"{{base_aurl}}"
+					],
+					"path": [
+						"booking",
+						"5"
+					],
+					"query": [
+						{
+							"key": "\"firstname\"",
+							"value": "seda"
+						},
+						{
+							"key": "\"lastname\"",
+							"value": "aydinli"
+						},
+						{
+							"key": "\"checkin\"",
+							"value": "05-04-2024"
+						},
+						{
+							"key": "checkout",
+							"value": "24-12-2025"
+						},
+						{
+							"key": "firstname",
+							"value": "Alina"
+						},
+						{
+							"key": "lastname",
+							"value": "Umaxanova"
+						},
+						{
+							"key": "checkin",
+							"value": "05-02-2025"
+						},
+						{
+							"key": "checkout",
+							"value": "05-04-2029"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_aurl}}/ping",
+					"host": [
+						"{{base_aurl}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PartialUpdatebooking",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\" : \"James\",\r\n    \"lastname\" : \"Brown\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/2313",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"2313"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "password123",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "authtoken",
+			"value": ""
+		},
+		{
+			"key": "base_aurl",
+			"value": "https://restful-booker.herokuapp.com",
+			"type": "default"
+		},
+		{
+			"key": "bookingID",
+			"value": ""
+		},
+		{
+			"key": "bookingid",
+			"value": ""
+		}
+	]
+}
