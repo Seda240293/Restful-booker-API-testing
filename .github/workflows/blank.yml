@@ -1,0 +1,36 @@
+name: Run Postman Tests with Newman
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  postman-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔁 Repository-ni klonla
+        uses: actions/checkout@v4
+
+      - name: 🧰 Node.js quraşdır
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: 📦 Newman quraşdır
+        run: npm install -g newman
+
+      - name: 🧪 Postman testlərini işə sal
+        run: |
+          newman run Restful-booker.postman_collection.json \
+            -e envir1.postman_environment.json \
+            -r cli,html \
+            --reporter-html-export newman/report.html
+
+      - name: 📤 HTML reportu GitHub-a artefakt kimi əlavə et
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: newman/report.html
